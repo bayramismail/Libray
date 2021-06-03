@@ -1,0 +1,124 @@
+﻿@page "/bookList"
+@inject IBookService BookService
+@using WebApp.Models
+@using WebApp.Services
+
+
+<style>
+    .table .thead-light th {
+        color: #000000;
+        background-color: lavender;
+    }
+    .benim{
+        background-color: #b6b6e6;
+        }
+    .avatar img {
+        width: 100%;
+        border-radius: .375rem;
+        height: 100%;
+    }
+  
+    </style>
+
+
+<h3>BookList</h3>
+@if (books == null)
+{
+    <button class="btn btn-primary" type="button" disabled>
+        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        Loading...
+    </button>
+}
+else
+{
+   
+    <div class="table-responsive" data-toggle="list" data-list-values='["name", "budget", "status", "completion"]'>
+        <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" @onclick="@(args=>tableAscDesc("name",args))" class="@tableClass("name")" data-sort="name">Id</th>
+                    <th scope="col" @onclick="@(args=>tableAscDesc("budget",args))" class="@tableClass("budget")" data-sort="budget">WriterId</th>
+                    <th scope="col" @onclick="@(args=>tableAscDesc("status",args))" class="@tableClass("status")" data-sort="status">PublisherId</th>
+                    
+                    <th scope="col" @onclick="@(args=>tableAscDesc("completion",args))" class="@tableClass("completion")" data-sort="completion">BookName</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody class="list">
+                @{
+                    foreach (var book in books)
+                    {
+                        <tr class="benim" >
+                            <th scope="row">
+                                <div class="media align-items-center">
+                                    <a href="#" class="avatar rounded-circle mr-3">
+                                        <img alt="Image placeholder" src="https://i.sozcu.com.tr/wp-content/uploads/2018/03/iecrop/fatihsultanmehmetkapak1_16_9_1521535013.jpg">
+                                    </a>
+                                    <div class="media-body">
+                                        <span class="name mb-0 text-sm">@book.Id</span>
+                                    </div>
+                                </div>
+                            </th>
+                            <td class="budget">
+                               @book.WriterId
+                            </td>
+                            <td>
+                                <span class="status">@book.PublisherId</span>
+                               
+                            </td>
+                          
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="completion mr-2">@book.BookName</span>
+                                   
+                                </div>
+                            </td>
+                            <td class="text-right">
+                                <div class="dropdown">
+                                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+}
+@code {
+    private BookListViewModel[] books;
+    private string select;
+
+    protected override async Task OnInitializedAsync()
+    {
+        books = await BookService.GetBooks();
+    }
+
+    private void tableAscDesc(string name, MouseEventArgs args)
+    {
+        select = name;
+
+    }
+
+    private string tableClass(string name)
+    {
+        if (select==null)
+        {
+            select = name;
+        }
+        if (select==name)
+        {
+            return "sort asc";
+        }
+        return "sort";
+    }
+}
