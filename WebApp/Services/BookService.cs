@@ -33,7 +33,7 @@ namespace WebApp.Services
 
         public async Task<BookListViewModel> GetBookById(int bookId)
         {
-            return await _httpClient.GetFromJsonAsync<BookListViewModel>("https://localhost:44354/api/Books/getById");
+            return await _httpClient.GetFromJsonAsync<BookListViewModel>("https://localhost:44354/api/Books/getById?bookId="+bookId);
         }
     }
 }

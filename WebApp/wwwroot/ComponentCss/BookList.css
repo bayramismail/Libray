@@ -1,0 +1,13 @@
+﻿.table .thead-light th {
+    color: #000000;
+    background-color: lavender;
+}
+
+.benim {
+    background-color: #b6b6e6;
+}
+.avatar img {
+    width: 100%;
+    border-radius: .375rem;
+    height: 100%;
+}

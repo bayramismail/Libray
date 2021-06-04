@@ -1,9 +1,31 @@
-﻿@page "/bookDetail"
+﻿@page "/bookDetail/{bookId:int}"
+@page "/bookDetail"
+
+@inject IBookService BookService
 
 <h3>BookDetail</h3>
 
-
-
-@code {
-
+@{
+    if (listViewModel==null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <strong>Danger!</strong> Hatalı
+        </div>
+    }
+    else
+    {
+        <div class="card-deck">
+            <div class="card">
+                <img class="card-img-top" src="argon-css/assets/img/theme/img-1-1000x600.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@listViewModel.BookName</h5>
+                    <p class="card-text">@listViewModel.ISBNNumber</p>
+                    <p class="card-text"><small class="text-muted">@listViewModel.BookDescription</small></p>
+                </div>
+            </div>
+  
+        </div>
+    }
 }
+
+

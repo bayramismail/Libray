@@ -1,27 +1,28 @@
-﻿@page "/bookList"
+﻿
+@page "/bookList"
+@using _Imports = Blazored.Modal._Imports
 @inject IBookService BookService
-@using WebApp.Models
-@using WebApp.Services
-
-
+@inject NavigationManager NavigationManager
 <style>
     .table .thead-light th {
         color: #000000;
         background-color: lavender;
     }
-    .benim{
+
+    .benim {
         background-color: #b6b6e6;
-        }
+    }
+
     .avatar img {
         width: 100%;
         border-radius: .375rem;
         height: 100%;
     }
-  
-    </style>
-
+</style>
 
 <h3>BookList</h3>
+
+<!-- #region Kitap listesi -->
 @if (books == null)
 {
     <button class="btn btn-primary" type="button" disabled>
@@ -31,7 +32,6 @@
 }
 else
 {
-   
     <div class="table-responsive" data-toggle="list" data-list-values='["name", "budget", "status", "completion"]'>
         <table class="table align-items-center table-flush">
             <thead class="thead-light">
@@ -39,7 +39,7 @@ else
                     <th scope="col" @onclick="@(args=>tableAscDesc("name",args))" class="@tableClass("name")" data-sort="name">Id</th>
                     <th scope="col" @onclick="@(args=>tableAscDesc("budget",args))" class="@tableClass("budget")" data-sort="budget">WriterId</th>
                     <th scope="col" @onclick="@(args=>tableAscDesc("status",args))" class="@tableClass("status")" data-sort="status">PublisherId</th>
-                    
+
                     <th scope="col" @onclick="@(args=>tableAscDesc("completion",args))" class="@tableClass("completion")" data-sort="completion">BookName</th>
                     <th scope="col"></th>
                 </tr>
@@ -48,7 +48,7 @@ else
                 @{
                     foreach (var book in books)
                     {
-                        <tr class="benim" >
+                        <tr @onclick="()=>bookDetail(book.Id)" class="benim">
                             <th scope="row">
                                 <div class="media align-items-center">
                                     <a href="#" class="avatar rounded-circle mr-3">
@@ -60,17 +60,17 @@ else
                                 </div>
                             </th>
                             <td class="budget">
-                               @book.WriterId
+                                @book.WriterId
                             </td>
                             <td>
                                 <span class="status">@book.PublisherId</span>
-                               
+
                             </td>
-                          
+
                             <td>
                                 <div class="d-flex align-items-center">
                                     <span class="completion mr-2">@book.BookName</span>
-                                   
+
                                 </div>
                             </td>
                             <td class="text-right">
@@ -94,31 +94,4 @@ else
         </table>
     </div>
 }
-@code {
-    private BookListViewModel[] books;
-    private string select;
-
-    protected override async Task OnInitializedAsync()
-    {
-        books = await BookService.GetBooks();
-    }
-
-    private void tableAscDesc(string name, MouseEventArgs args)
-    {
-        select = name;
-
-    }
-
-    private string tableClass(string name)
-    {
-        if (select==null)
-        {
-            select = name;
-        }
-        if (select==name)
-        {
-            return "sort asc";
-        }
-        return "sort";
-    }
-}
+<!-- #endregion -->
