@@ -1,7 +1,8 @@
 ﻿
 @page "/bookList"
 @using _Imports = Blazored.Modal._Imports
-@inject IBookService BookService
+@inject IBookService bookService
+@inject IToastService toastService
 @inject NavigationManager NavigationManager
 <style>
     .table .thead-light th {
@@ -23,7 +24,7 @@
 <h3>BookList</h3>
 
 <!-- #region Kitap listesi -->
-@if (books == null)
+@if (books ==null)
 {
     <button class="btn btn-primary" type="button" disabled>
         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>

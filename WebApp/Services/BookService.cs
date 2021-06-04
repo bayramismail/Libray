@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using WebApp.Core.Results;
 using WebApp.Models;
 
 namespace WebApp.Services
@@ -15,15 +16,19 @@ namespace WebApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<BookListViewModel[]> GetBooks()
+        public async Task<DataResult<BookListViewModel[]>> GetBooks()
         {
-            
-            return await _httpClient.GetFromJsonAsync<BookListViewModel[]>("https://localhost:44354/api/Books/getAll");
+            var result =
+                await _httpClient.GetFromJsonAsync<DataResult<BookListViewModel[]>>(
+                    _httpClient.BaseAddress+"api/Books/getAll");
+            return result;
+
+
         }
 
         public async Task Add(BookListViewModel bookListViewModel)
         {
-            await _httpClient.PostAsJsonAsync("https://localhost:44354/api​/Books​/add", bookListViewModel);
+            await _httpClient.PostAsJsonAsync(_httpClient.BaseAddress+"api​/Books​/add", bookListViewModel);
         }
 
         public Task Save(BookListViewModel bookListViewModel)
@@ -33,7 +38,7 @@ namespace WebApp.Services
 
         public async Task<BookListViewModel> GetBookById(int bookId)
         {
-            return await _httpClient.GetFromJsonAsync<BookListViewModel>("https://localhost:44354/api/Books/getById?bookId="+bookId);
+            return await _httpClient.GetFromJsonAsync<BookListViewModel>(_httpClient.BaseAddress+"/api/Books/getById?bookId="+bookId);
         }
     }
 }

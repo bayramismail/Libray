@@ -1,0 +1,36 @@
+﻿@page "/bookTypeAdd"
+<h3 class="text-center">BookTypeAdd</h3>
+<style>
+    .validation-message {
+        font-size: .875rem;
+        color: #fff;
+        border-color: #f75676;
+        background-color: #f75676;
+        
+        border-radius: 5px;
+        padding: 2px;
+        margin: 1px;
+        text-align: center
+    }
+    .invalid {
+        outline: 1px solid red;
+        border-radius: 2px;
+    }
+</style>
+<EditForm Model="bookTypeViewModel" OnValidSubmit="OnClickAdd">
+    
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div class="row">
+        <div class="col-lg-6 col-md-8 col-12 ml-auto mr-auto">
+            <div class="input-group mb-2">
+                <InputText id="bookTypeName" class="form-control" @bind-Value="bookTypeViewModel.BookTypeName"></InputText>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit" id="button-addon2">Ekle</button>
+                </div>
+            </div>
+            <div class="row">
+                <ValidationMessage  For="(() => bookTypeViewModel.BookTypeName)"></ValidationMessage>
+            </div>
+        </div>
+    </div>
+</EditForm>

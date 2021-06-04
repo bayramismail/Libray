@@ -1,15 +1,7 @@
 ﻿@page "/"
 @using Blazored.Toast.Configuration
 @inject IToastService toastService
-<BlazoredToasts />
-<BlazoredToasts Position="ToastPosition.TopRight"
-                Timeout="5"
-                SuccessClass="success-toast-override"
-                IconType="IconType.FontAwesome" 
-                ErrorIcon="fas fa-times"
-                SuccessIcon="fas fa-check-circle"
-                ShowProgressBar="true"
-/>
+
 
 <button class="btn btn-info" @onclick="@(() => toastService.ShowInfo("Welcome to TheCodehubs"))">Info Toast</button>
 <button class="btn btn-success" @onclick="@(() => toastService.ShowSuccess("You are sign up successfully!"))">Success Toast</button>
